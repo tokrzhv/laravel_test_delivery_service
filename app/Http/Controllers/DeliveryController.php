@@ -11,11 +11,13 @@ class DeliveryController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
+        //urls of deliveries services stored in db 
         $delivery = DeliveryType::where('id', $data['delivery'])->first()->url;
 
         return $this->sendData($data, $delivery);
     }
-
+// when use other delivery service, sendData post response for any address which are in delivedy_type table
+// if need to send different body you can to create other sendData function and run it with Vuejs or other methods
     public function sendData($data, $delivery)
     {
         Http::post($delivery, [
